@@ -1,0 +1,62 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2019-05-14 22:11
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: Daniel
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE SCHEMA IF NOT EXISTS `pfinal` DEFAULT CHARACTER SET utf8 ;
+
+CREATE TABLE IF NOT EXISTS `pfinal`.`usuarios` (
+  `correo` VARCHAR(45) NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `fecha_nacimiento` INT(11) NOT NULL,
+  `n_tarjeta` INT(11) NOT NULL,
+  `cp` INT(11) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`correo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `pfinal`.`historial` (
+  `idskin` INT(11) NOT NULL,
+  `pagado` INT(11) NOT NULL,
+  `cantidad` INT(11) NOT NULL,
+  `u_correo` VARCHAR(45) NOT NULL,
+  `fecha_compra` VARCHAR(80) NULL DEFAULT NULL,
+  INDEX `correo_idx` (`u_correo` ASC) ,
+  CONSTRAINT `idskin`
+    FOREIGN KEY (`idskin`)
+    REFERENCES `pfinal`.`skins` (`idskins`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `correo`
+    FOREIGN KEY (`u_correo`)
+    REFERENCES `pfinal`.`usuarios` (`correo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `pfinal`.`skins` (
+  `idskins` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `descripcion` VARCHAR(1000) NOT NULL,
+  `foto` VARCHAR(70) NOT NULL,
+  `precio` INT(11) NOT NULL,
+  `c_almacen` INT(11) NOT NULL,
+  `fabricante` VARCHAR(45) NOT NULL,
+  `origen` VARCHAR(45) NOT NULL,
+  `campeon` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idskins`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
